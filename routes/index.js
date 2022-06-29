@@ -2,6 +2,7 @@ const router = require("express").Router();
 const bcryptjs = require('bcryptjs');
 const User=require("../models/User.model")
 const saltRounds = 10;
+const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.render("./index");
@@ -112,8 +113,20 @@ module.exports = router;
 
   })
 
-  router.get('/user-profile', (req, res) => {
+  router.get('/user-profile',isLoggedIn, (req, res) => {
     res.render('./user-profile', { userInSession: req.session.currentUser });
   });
+
+  router.post('/logout', (req, res, next) => {
+    req.session.destroy(err => {
+      if (err) next(err);
+      res.redirect('/');
+    });
+  });
  // ... the rest of the code stays unchanged
- 
+ router.get('/private',isLoggedIn, (req, res) => {
+  res.render('./private', { userInSession: req.session.currentUser });
+});
+router.get('/main',isLoggedIn, (req, res) => {
+  res.render('./main', { userInSession: req.session.currentUser });
+});

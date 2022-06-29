@@ -1,9 +1,17 @@
-{{#if userInSession}}
-    <h2>Welcome, {{ userInSession.username }}!</h2>
-    <p>This is your profile page my friend!</p>
-    <button>
-        <a href="/user-profile">Reload the page</a>
-    </button>
-{{else}}
-    <p>Still no logged in user, sorry!</p>
-{{/if}}
+<nav>
+    <ul>
+      <li id="to-left">
+        <p><a href="/"> Users - demo </a></p>
+      </li>
+      <li id="to-right">
+        <a href="/signup">Signup</a> <span> | </span>
+        <a href="/login">Login</a> <span> | </span>
+        <form id="logout-form" action="/logout" method="POST">
+          <button>Logout</button> <span> | </span>
+        </form>
+ 
+        <a href="/userProfile">Profile</a>   {{!-- !!! --}}
+ 
+      </li>
+    </ul>
+  </nav>
