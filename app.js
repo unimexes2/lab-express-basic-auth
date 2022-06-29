@@ -14,7 +14,7 @@ const express = require('express');
 const hbs = require('hbs');
 
 const app = express();
-
+require('./config/session.config')(app);
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require('./config')(app);
 
@@ -32,4 +32,11 @@ app.use('/', index);
 require('./error-handling')(app);
 
 module.exports = app;
+
+
+
+//     |
+//     |-----------------------------|
+// use session here:                 V
+
 

@@ -82,7 +82,9 @@ module.exports = router;
           res.render('./login.hbs', { errorMessage: 'Email is not registered. Try with other email.' });
           return;
         } else if (bcryptjs.compareSync(password, user.passwordHash)) {
-          res.render('./user-profile', { user });
+          
+          req.session.currentUser = user;
+          res.render('./user-profile',{ userInSession: req.session.currentUser });
         } else {
           res.render('./login', { errorMessage: 'Incorrect password.' });
         }
@@ -109,5 +111,9 @@ module.exports = router;
     });
 
   })
+
+  router.get('/user-profile', (req, res) => {
+    res.render('./user-profile', { userInSession: req.session.currentUser });
+  });
  // ... the rest of the code stays unchanged
  
